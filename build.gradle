@@ -3,16 +3,16 @@ plugins {
     id 'de.dfki.mary.voicebuilding-festvox' version '5.3.2'
 }
 
-group 'de.dfki.mary'
-version '5.3-SNAPSHOT'
+group 'de.dfki.mlt'
+version '0.1-SNAPSHOT'
 
 voice {
-    name = 'cmu-awb-time'
-    language = 'en'
-    region = 'US'
-    gender = 'male'
+    name = 'female-voice-dutch'
+    language = 'nl'
+    region = 'NL'
+    gender = 'female'
     type = 'unit selection'
-    description = 'A male Scottish English limited-domain unit selection voice, built from recordings provided by Carnegie Mellon University'
+    description = 'A female Dutch unit selection voice'
     samplingRate = 16000
 }
 
@@ -31,9 +31,10 @@ repositories {
     }
 }
 
+/* TODO: Do we need this?
 dependencies {
     data group: 'org.festvox', name: 'cmu_time_awb', classifier: 'ldom', ext: 'tar.bz2'
-}
+}*/
 
 text.srcFileName = 'time.data'
 
@@ -41,8 +42,8 @@ legacyInit.dependsOn wav, text, lab
 
 generateVoiceConfig {
     afterEvaluate {
-        config << [
+        /*config << [
                 exampleTextFile: "jar:/marytts/voice/$voice.nameCamelCase/exampleText.txt",
-        ]
+        ]*/
     }
 }
