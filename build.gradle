@@ -12,12 +12,15 @@ voice {
     language = 'nl'
     region = 'NL'
     gender = 'female'
-    type = 'unit selection'
-    description = 'A female Dutch unit selection voice'
+    type = 'hmm'
+    description = 'A female Dutch HMM voice'
     samplingRate = 16000
 }
 
 repositories {
+    flatDir {
+        dirs '/media/kiefer/Data/dutch_voice/marysrc/marytts-bk/target/marytts-5.2/lib'
+    }
     ivy {
         url 'https://dl.bintray.com/marytts/marytts'
         layout 'pattern', {
@@ -37,13 +40,13 @@ dependencies {
     data group: 'org.festvox', name: 'cmu_time_awb', classifier: 'ldom', ext: 'tar.bz2'
 }*/
 
-task unpackTextResources(type: Copy) {
-    from zipTree("$buildDir/text.zip"), {
-    }
-    into "$buildDir/text"
+task unpackResources(type: Copy) {
+    from tarTree(resources.gzip("$buildDir/../librivox-anna-simon.tar.gz"))
+    into "$buildDir"
     includeEmptyDirs = false
 }
 
+/*
 task unpackWav(type: Copy) {
     from zipTree("$buildDir/wav.zip"), {
         eachFile {
@@ -53,10 +56,15 @@ task unpackWav(type: Copy) {
     into "$buildDir/wav"
     includeEmptyDirs = false
 }
+*/
 
 text.srcFileName = 'time.data'
 
-legacyInit.dependsOn unpackTextResources, unpackWav, wav, text, lab
+// to get the 'lab', do: `./gradlew runForcedAlignment`
+// also check task: convertTextGridToXLab
+legacyInit.dependsOn unpackResources, wav
+
+build.dependsOn runForcedAlignment, convertTextGridToXLab
 
 generateVoiceConfig {
     afterEvaluate {

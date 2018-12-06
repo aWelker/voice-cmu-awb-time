@@ -1,23 +1,33 @@
 [![Build Status](https://travis-ci.org/marytts/voice-cmu-awb-time.svg?branch=master)](https://travis-ci.org/marytts/voice-cmu-awb-time)
 
-# voice-cmu-awb-time
+# voice-anna-librivox
 
-A male Scottish English limited-domain unit selection voice for [MaryTTS](http://mary.dfki.de/) built from [recordings provided by CMU](http://festvox.org/cmu_arctic/)
+A female Dutch HMM voice for [MaryTTS](http://mary.dfki.de/) built from
+LibriVox data: [Een Nagelaten Bekentenis](https://librivox.org/een-nagelaten-bekentenis-door-marcellus-emants/) and [Majoor Frans](https://librivox.org/majoor-frans/)
+
+Sentence-split text files and original silence-segmented wav files were
+semi-automatically produced and can be found [here](https://foo.bar)
+
+A [subset](https://foo.baz) was selected based on average loudness, with sound
+files normalized to -1 db using:
+
+```
+for f in wav-orig/* ; do sox --norm=-1 $f wav/`basename $f` ; done
+```
 
 ## Prerequisites
-
-You will need to have [Java](https://www.java.com/), [SoX](http://sox.sourceforge.net/), and the [Edinburgh Speech Tools](http://www.cstr.ed.ac.uk/projects/speech_tools/) installed.
-On OSX with [Homebrew](http://brew.sh/), do
-```
-$ brew cask install java
-$ brew install sox speech-tools
-```
-as needed.
 
 On Debian-based Linux (including Ubuntu), do
 ```
 $ sudo apt-get install default-jdk sox speech-tools
 ```
+
+For the kaldi-based forced aligner, install the following: (see (https://github.com/marytts/gradle-marytts-kaldi-mfa-plugin))
+
+```
+$ sudo apt-get install libatlas3-base
+```
+
 accordingly.
 
 ### Initializing the build
